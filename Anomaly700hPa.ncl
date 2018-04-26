@@ -1,17 +1,17 @@
 begin
-low_vals=-2
-high_vals=2
-int_vals=0.25
+low_vals=-2.4
+high_vals=2.4
+int_vals=0.4
 
-Glow_vals=-70
-Ghigh_vals=70
-Gint_vals=10
+Glow_vals=-40
+Ghigh_vals=40
+Gint_vals=8
 
 
 ;#######################do loop for days##############
 do n=0,14
 ;Addfile
-fname="/home/user/Documents/work/me10Criterion/OneSigma_anom/sequence/500hPa/Anom"+n+"ERA_1.5deg_500hPa.nc"
+fname="/home/user/Documents/work/me10Criterion/OneSigma_anom/sequence/700hPa/Anom"+n+"ERA_1.5deg_700hPa.nc"
 f=addfile(fname,"r")
 
 ;read variables
@@ -32,7 +32,7 @@ v=f->v
 
 day=n-7
 
-wks = gsn_open_wks("eps","OneSigma_Anom_500hPa_"+day)         ; send graphics to eps file
+wks = gsn_open_wks("eps","One_Sigma_Anom_700hPa_"+day)         ; send graphics to eps file
 
 res = True  
 res@mpFillOn = False
@@ -46,7 +46,7 @@ res@cnLevelSpacingF = int_vals			; set the interval between contours
 res@cnFillOn        = True                  ; color fill
 res@cnLinesOn       = False                 ; do not draw contour lines
 res@cnFillPalette   = "BlueDarkRed18";"cmp_haxby";"MPL
-res@tiMainString = "Anomaly  Temp and z at 500hPa "+day            ; set the main title
+res@tiMainString = "Anomaly  Temp and z at 700hPa "+day            ; set the main title
 res@gsnLeftString = ""                      ; do not draw the left sub-title (otherwise automatically set to temp@long_name)
 res@gsnRightString = ""  
 res@gsnPolar   = "NH"                    ; do not draw the right sub-title (otherwise automatically set to temp@units)

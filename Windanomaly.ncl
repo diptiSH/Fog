@@ -11,7 +11,7 @@ Gint_vals=100
 ;#######################do loop for days##############
 do n=0,14
 ;Addfile
-fname="/home/user/Documents/work/me10_AO_EU_Analysis/both_pos/500hPa/Anom"+n+"ERA_1.5deg_500hPa.nc"
+fname="/home/user/Documents/work/me10Criterion/OneSigma_anom/sequence/500hPa/Anom"+n+"ERA_1.5deg_500hPa.nc"
 f=addfile(fname,"r")
 
 ;read variables
@@ -32,7 +32,7 @@ v=f->v
 
 day=n-7
 
-wks = gsn_open_wks("eps","Wind_ME10_both_pos_Anom_500hPa_"+day)         ; send graphics to eps file
+wks = gsn_open_wks("eps","WindOneSigma_Anom_500hPa_"+day)         ; send graphics to eps file
 
 res = True  
 ;res@mpFillOn = False
