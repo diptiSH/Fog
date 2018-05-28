@@ -3,7 +3,7 @@ begin
 ymin = 1.            ; min height to be plotted
   ymax = 1000.            ; max height to be plotted
 
-f=addfile("/home/iitm/fog-files-d/Fog/AnomERA3D-00UTC-1.5deg_Fog.nc","r")
+f=addfile("/home/iitm/fog-files-d/NoFog/AnomERA3D-00UTC-1.5deg_NoFog.nc","r")
 
 u=f->u(:,:,{15:45},{80})
 
@@ -35,7 +35,7 @@ printVarSummary(wspd)
 
 	
 ;===========================================================
-  wks = gsn_open_wks("eps","Anomwind_profilebarb")    ; send graphics to PNG file
+  wks = gsn_open_wks("eps","NoFogAnomwind_profilebarb")    ; send graphics to PNG file
   gsn_define_colormap(wks,"WhBlGrYeRe")
 
   res                = True                    
