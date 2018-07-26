@@ -17,7 +17,7 @@ nodays=31
 
 ;;;;;;;;;;;;;;;;; define fog data ;;;;;;;;;;;;;
 
-fogdata=new((/nofiles,noyears,nomonths,nodays/),"integer")
+fogdata=new((/nofiles,noyears,nomonths,nodays/),"integer",9)
 
 fogdata!0 = "station"
 fogdata!1 = "year"
@@ -37,7 +37,7 @@ print(fogdata&station)
 
 do i=0,nofiles-1
 
-fname="/media/Seagate Backup Plus Drive/Desktop_Backup/Documents/Data/daily_imd_station/"+flist(i)+".txt"
+fname="/media/New Volume/DATA/IMD_Data/daily_imd_statio2/"+flist(i)+".txt"
 
 print(fname)
 
@@ -94,7 +94,7 @@ mthan9days=0
 do i=0,noyears-1
   do j=0,nomonths-1
      do k=0,nodays-1
-
+         
          if(sum(fogdata(:,i,j,k)) .gt. 9 ) then
             mthan9days=mthan9days+1
             print(fogdata&year(i)+"  "+fogdata&month(j)+"  "+fogdata&day(k))
@@ -108,16 +108,26 @@ end do
 print(mthan9days)
 
 
+;fogWrite=new((/noyears*nomonths*nodays,nofiles/),typeof(fogdata))
+
+fogWrite=reshape(fogdata(year|:,month|:,day|:,station|:),(/noyears*nomonths*nodays,nofiles/))
+
+printVarSummary(fogWrite)
+
+
 fogdays=new(mthan9days,"string")
+foggyStations=new(noyears*nomonths*nodays,integer,0)
 
 in=0
+fin=0
 
 do i=0,noyears-1
   do j=0,nomonths-1
      do k=0,nodays-1
-
+         foggyStations(fin)=sum(fogdata(:,i,j,k))
+         fin=fin+1
          if(sum(fogdata(:,i,j,k)) .gt. 9 ) then
-            fogdays(in)=fogdata&year(i)+"  "+fogdata&month(j)+"  "+fogdata&day(k)
+            fogdays(in)=fogdata&year(i)+"-"+fogdata&month(j)+"-"+fogdata&day(k)
            ; print(fogdata&year(i)+"  "+fogdata&month(j)+"  "+fogdata&day(k))
             in=in+1
          end if
@@ -126,9 +136,19 @@ do i=0,noyears-1
   end do
 end do
 
-
+asciiwrite("foggyStations.txt",foggyStations)
 asciiwrite("fogdays.txt",fogdays)
 
 print(fogdata(:,{1980},{12},{1}))
+
+
+   opt        = True
+  opt@fout = "fog_matrix.txt"
+  write_matrix (fogWrite, "26I2", opt)
+ 
+
+ 
+
+
 
 end
